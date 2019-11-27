@@ -1,0 +1,21 @@
+---
+title: "R Markdown and chunk"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+This is a code block!
+```{r Code Block 1, results='hide'}
+a <- 2
+```
+
+Testing
+
+```{r Code Block 2, message=FALSE, warning=FALSE}
+a+2
+```
+
