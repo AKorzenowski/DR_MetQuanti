@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.11.27)  27 NOV 2019 11:42
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.11.27)  28 NOV 2019 00:17
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1023,114 +1023,123 @@ Package xcolor Warning: Incompatible color definition on input line 764.
 Package xcolor Warning: Incompatible color definition on input line 774.
 
 
-Package xcolor Warning: Incompatible color definition on input line 779.
+Package xcolor Warning: Incompatible color definition on input line 780.
 
 
-Package xcolor Warning: Incompatible color definition on input line 779.
+Package xcolor Warning: Incompatible color definition on input line 780.
 
 
-Package xcolor Warning: Incompatible color definition on input line 785.
+Package xcolor Warning: Incompatible color definition on input line 786.
 
 
-Package xcolor Warning: Incompatible color definition on input line 789.
+Package xcolor Warning: Incompatible color definition on input line 790.
 
 
-Package xcolor Warning: Incompatible color definition on input line 789.
+Package xcolor Warning: Incompatible color definition on input line 790.
 
 
-Package xcolor Warning: Incompatible color definition on input line 799.
+Package xcolor Warning: Incompatible color definition on input line 796.
 
 
-Package xcolor Warning: Incompatible color definition on input line 803.
+Package xcolor Warning: Incompatible color definition on input line 800.
 
 
-Package xcolor Warning: Incompatible color definition on input line 803.
+Package xcolor Warning: Incompatible color definition on input line 800.
+
+
+Package xcolor Warning: Incompatible color definition on input line 810.
 
 [9 <./A01-Introduction_files/figure-latex/Code Block 10-2.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 816.
+Package xcolor Warning: Incompatible color definition on input line 814.
 
 
-Package xcolor Warning: Incompatible color definition on input line 820.
+Package xcolor Warning: Incompatible color definition on input line 814.
 
 
-Package xcolor Warning: Incompatible color definition on input line 820.
+Package xcolor Warning: Incompatible color definition on input line 825.
 
 
-Package xcolor Warning: Incompatible color definition on input line 832.
+Package xcolor Warning: Incompatible color definition on input line 829.
 
 
-Package xcolor Warning: Incompatible color definition on input line 836.
+Package xcolor Warning: Incompatible color definition on input line 829.
 
 
-Package xcolor Warning: Incompatible color definition on input line 836.
+Package xcolor Warning: Incompatible color definition on input line 841.
 
 
-Package xcolor Warning: Incompatible color definition on input line 842.
+Package xcolor Warning: Incompatible color definition on input line 845.
 
 
-Package xcolor Warning: Incompatible color definition on input line 846.
+Package xcolor Warning: Incompatible color definition on input line 845.
 
 
-Package xcolor Warning: Incompatible color definition on input line 846.
+Package xcolor Warning: Incompatible color definition on input line 851.
 
 
-Package xcolor Warning: Incompatible color definition on input line 885.
+Package xcolor Warning: Incompatible color definition on input line 855.
 
 
-Package xcolor Warning: Incompatible color definition on input line 890.
+Package xcolor Warning: Incompatible color definition on input line 855.
 
 
-Package xcolor Warning: Incompatible color definition on input line 890.
+Package xcolor Warning: Incompatible color definition on input line 894.
 
 [10]
 
-Package xcolor Warning: Incompatible color definition on input line 900.
+Package xcolor Warning: Incompatible color definition on input line 899.
 
 
-Package xcolor Warning: Incompatible color definition on input line 904.
+Package xcolor Warning: Incompatible color definition on input line 899.
 
 
-Package xcolor Warning: Incompatible color definition on input line 904.
+Package xcolor Warning: Incompatible color definition on input line 909.
 
 
-Package xcolor Warning: Incompatible color definition on input line 910.
+Package xcolor Warning: Incompatible color definition on input line 913.
 
 
-Package xcolor Warning: Incompatible color definition on input line 914.
+Package xcolor Warning: Incompatible color definition on input line 913.
 
 
-Package xcolor Warning: Incompatible color definition on input line 914.
+Package xcolor Warning: Incompatible color definition on input line 919.
 
 
-Package xcolor Warning: Incompatible color definition on input line 921.
+Package xcolor Warning: Incompatible color definition on input line 923.
 
 
-Package xcolor Warning: Incompatible color definition on input line 925.
+Package xcolor Warning: Incompatible color definition on input line 923.
 
 
-Package xcolor Warning: Incompatible color definition on input line 925.
+Package xcolor Warning: Incompatible color definition on input line 930.
 
 
-Package xcolor Warning: Incompatible color definition on input line 931.
+Package xcolor Warning: Incompatible color definition on input line 934.
 
 
-Package xcolor Warning: Incompatible color definition on input line 935.
+Package xcolor Warning: Incompatible color definition on input line 934.
 
 
-Package xcolor Warning: Incompatible color definition on input line 935.
+Package xcolor Warning: Incompatible color definition on input line 940.
+
+
+Package xcolor Warning: Incompatible color definition on input line 944.
+
+
+Package xcolor Warning: Incompatible color definition on input line 944.
 
 [11]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1013.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1022.
 [12]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1013.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1022.
 (./A01-Introduction.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1013.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1013.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1022.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1022.
 
 Package rerunfilecheck Info: File `A01-Introduction.out' has not changed.
 (rerunfilecheck)             Checksum: 8A391A29AEB5298021E8910F991D876C;3772.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1013.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1022.
  ) 
 Here is how much of TeX's memory you used:
  11646 strings out of 494111
@@ -1139,7 +1148,7 @@ Here is how much of TeX's memory you used:
  15536 multiletter control sequences out of 15000+600000
  52074 words of font info for 46 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 31i,9n,37p,595b,441s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 31i,9n,37p,595b,380s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/Users/andrekorzenowski/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mat
 hsy.enc}{/Users/andrekorzenowski/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/
 lm-rm.enc}{/Users/andrekorzenowski/Library/TinyTeX/texmf-dist/fonts/enc/dvips/l
@@ -1158,7 +1167,7 @@ korzenowski/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtk10.pfb></Users
 /andrekorzenowski/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb><
 /Users/andrekorzenowski/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtti1
 0.pfb>
-Output written on A01-Introduction.pdf (12 pages, 464991 bytes).
+Output written on A01-Introduction.pdf (12 pages, 465178 bytes).
 PDF statistics:
  263 PDF objects out of 1000 (max. 8388607)
  226 compressed objects within 3 object streams

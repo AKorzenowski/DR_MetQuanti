@@ -34,7 +34,7 @@ Nesta disciplina trabalharemos com certa flexibilidade em apenas alguns tópicos
    6 & 17/04 & Introdução à Data Mining - Association Rules \\
    7 & 24/04 & Modelo de aprendizagem supervisionada: Artificial Neural Networks \\
    8 & 08/05 & Modelo de Classificação: Linear Support Vector Machine \\
-   9 & 15/05 & Otimização Combinatória: Simulated Anealing \\
+   9 & 15/05 & Otimização Combinatória: Simulated Annealing \\
   10 & 22/05 & Otimização Combinatória: Genetic Algorithm \\ 
   \hline
   \rowcolor{gray!10} & & Projeto Aplicado\\
@@ -232,17 +232,19 @@ sample(moeda,10,replace=TRUE)
 
 A função sort coloca os valores de um objeto em ordem crescente ou em ordem decrescente. 
 ```{r Code Block 12, message=FALSE, warning=FALSE}
+set.seed(42)
 exemplo<-sample(1:100,10)
+exemplo
 sort(exemplo) # para colocar em ordem crescente
 sort(exemplo, decreasing=TRUE) # para colocar em ordem decrescente 
 ```
 
 A função order retorna a posição original de cada valor do objeto **exemplo** caso os valores do objeto **exemplo** sejam colocados em ordem.
 ```{r Code Block 13, message=FALSE, warning=FALSE}
-order(exemplo) 
+order(as.array(exemplo) )
 ```
 
-Note que o primeiro valor acima é 7, isso indica que se quisermos colocar o objeto **exemplo** em ordem crescente o primeiro valor deverá ser o sétimo valor do **exemplo**, que é o valor 2 (o menor deles). Na sequência devemos colocar o quinto valor do objeto **exemplo**, que é 24, depois o segundo, depois o nono... até que objeto **exemplo** fique em ordem crescente.
+Note que o primeiro valor acima é 5, isso indica que se quisermos colocar o objeto **exemplo** em ordem crescente o primeiro valor deverá ser o quinto valor  do **exemplo**, que é o valor 18 (o menor deles). 
 ```{r Code Block 14, message=FALSE, warning=FALSE}
 order(exemplo,decreasing=TRUE)
 ```
@@ -255,7 +257,7 @@ exemplo # apenas para relembrar os valores do exemplo
 rank(exemplo) # Para atribuir postos (ranks) aos valores do exemplo
 ```
 
-Veja que 94 é o maior valor do exemplo, portanto recebe o maior rank, no caso 10.
+Veja que `r max(exemplo)` é o maior valor do exemplo, portanto recebe o maior rank, no caso 10.
 
 ## Importar conjunto de dados para o R
 A tarefa de importar conjuntos de dados na versão nativa do R sempre foi um tanto desafiadora. Funções e argumentos além da necessidade de instalar e carregar pacotes especificos se os dados não estavam no formato adequado. Com o RStudio, a tarefa ficou muito simplificada pela facilidade de utilizar os menus - algo tipo *Click-and-Play*!
