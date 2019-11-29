@@ -6,7 +6,7 @@ header-includes:
 output: pdf_document
 ---
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, cache = 3)
+knitr::opts_chunk$set(echo = TRUE, cache = 2)
 ```
 # Aula 01: Apresentação da Disciplina, Introdução ao R
 
