@@ -4,6 +4,7 @@ author: "Prof. Dr. A. L. Korzenowski"
 header-includes:
    - \usepackage{array,xcolor,colortbl}
 output: pdf_document
+lang: pt
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, cache = 2)
@@ -78,7 +79,7 @@ Recentemente, a comunidade desenvolveu o programa [RStudio](http://rstudio.com),
 Utilizaremos a opção RStudio Cloud, uma plataforma on-line onde é necessário apenas um navegador e acesso a internet. O RStudio, seja na versão local ou na Cloud, tem a aparência apresentada na Figura 1. Esta imagem foi recortada do RStudio IDE CHEAT SHEET, que você pode baixar no link [https://github.com/rstudio/cheatsheets/raw/master/rstudio-ide.pdf](https://github.com/rstudio/cheatsheets/raw/master/rstudio-ide.pdf).
 
 ```{r pressure, echo=FALSE, fig.cap="RStudio IDE CHEAT SHEET", out.width = '100%'}
-knitr::include_graphics("RStudio.png")
+knitr::include_graphics("A01-RStudio.png")
 ```
 
 ### Tarefa 

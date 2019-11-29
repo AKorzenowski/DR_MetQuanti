@@ -1,0 +1,12 @@
+---
+title: "Métodos Quantitativos"
+author: "Prof. Dr. A. L. Korzenowski"
+header-includes:
+   - \usepackage{array,xcolor,colortbl}
+output: pdf_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = 2)
+```
+# Aula XX:
+
