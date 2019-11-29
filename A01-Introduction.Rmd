@@ -6,7 +6,7 @@ header-includes:
 output: pdf_document
 ---
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, cache = 3)
 ```
 # Aula 01: Apresentação da Disciplina, Introdução ao R
 
@@ -276,6 +276,12 @@ dados[2,]  # dados da linha 2
 dados[,5]  # dados da coluna 5
 dados[2:3,2:4] # submatriz com dados das linhas 2 e 3 e colunas 2 a 4
 ```
+
+Segue outras funções úteis. teste-as e verifique o que acontece. Leia também a ajuda desta funções:
+
+* ls()
+* dir()
+* getwd()
 
 A sequência da apredizagem do R se dá com uso, leitura de manuais, ajuda e fóruns da internet... Mãos a obra
 
