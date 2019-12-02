@@ -1,0 +1,12 @@
+---
+title: "Métodos Quantitativos"
+author: "Prof. Dr. A. L. Korzenowski"
+header-includes:
+   - \usepackage{array,xcolor,colortbl}
+output: pdf_document
+lang: pt
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = 0)
+```
+# Aula 03: Modelos Lineares de Regressão e Generalizados
