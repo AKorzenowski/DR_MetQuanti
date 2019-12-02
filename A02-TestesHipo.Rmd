@@ -4,7 +4,7 @@ author: "Prof. Dr. A. L. Korzenowski"
 header-includes:
    - \usepackage{array,xcolor,colortbl}
 output: pdf_document
-lang: pt
+#lang: pt
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, cache = 0)
@@ -165,8 +165,8 @@ cor(mtcars, use="complete.obs", method="kendall")
 cov(mtcars, use="complete.obs")
 
 # Correlations with significance levels
-library(Hmisc)
-rcorr(x, type="pearson") # type can be pearson or spearman
+require(Hmisc)
+rcorr(x,y, type="pearson") # type can be pearson or spearman
 
 #mtcars is a data frame 
 rcorr(as.matrix(mtcars))
