@@ -1,0 +1,12 @@
+base
+carData
+car
+cluster
+fpc
+psych
+MASS
+boot
+lattice
+nFactors
+readxl
+nortest

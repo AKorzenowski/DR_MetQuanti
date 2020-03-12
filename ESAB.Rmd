@@ -1,0 +1,36 @@
+---
+title: "Tarefa Dissertativa - Unidade 26"
+author: "André L. Korzenowski"
+header-includes:
+   - \usepackage{array,xcolor,colortbl}
+output: pdf_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = 2)
+options(tinytex.verbose = TRUE)
+```
+
+Devido ao sucesso de vendas da empresa XYZ, um gerente financeiro apontou, ao final do mês, um lucro de R$ 20.000,00. Decidiu, então, aplicar esse valor e conseguiu uma excelente aplicação com juros de 12% ao ano, considerando a capitalização composta. Partindo desse enunciado, responda às questões a seguir.
+
+1. Determine o montante adquirido após 1 ano.
+$$ M=20000 \times (1+0.12)^1 - 20000 \times 1.12 = 22400$$
+
+2. Construa uma tabela considerando os 10 primeiros anos de aplicação.
+
+```{r Code Block 1, echo=FALSE}
+foo<-matrix(nrow=11,ncol=2,dimnames = list(rep("",11),c("Ano","Montante")))
+foo[1,]<-c(0,20000)
+for (i in 2:11){
+  foo[i,1]<-i-1
+  foo[i,2]<-20000*1.12^(i-1)
+}
+
+print(foo)
+```
+
+
+3. Esboce o gráfico que representa essa função.
+
+```{r Code Block 2, echo=FALSE, out.width = '65%', fig.align = "center"}
+plot(foo, ylab="Montante", xlab="Tempo (anos)", type="l")
+```

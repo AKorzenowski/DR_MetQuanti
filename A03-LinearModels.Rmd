@@ -1,0 +1,174 @@
+---
+title: "Métodos Quantitativos"
+author: "Prof. Dr. A. L. Korzenowski"
+header-includes:
+   - \usepackage{array,xcolor,colortbl}
+output: pdf_document
+#lang: pt
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = 0)
+options(tinytex.verbose = TRUE)
+```
+# Aula 03: Modelos Lineares de Regressão e Generalizados
+
+## Multiple (Linear) Regression
+A regressão linear simples é utilizada para analisar relações entre variáveis contínuas. Para fazer a regressão no R a função é **lm()**, para linear models. A seguir temos um exemplo de aplicação das funções e discutiremos os conceitos em conjunto com os resultados.
+
+```{r Code Block 1, message=FALSE, warning=FALSE}
+# Multiple Linear Regression Example 
+require(car)
+attach(mtcars)
+fit <- lm(mpg ~ hp + wt + vs, data=mtcars)
+summary(fit) # show results
+
+# Other useful functions 
+coefficients(fit) # model coefficients
+confint(fit, level=0.95) # CIs for model parameters 
+fitted(fit) # predicted values
+residuals(fit) # residuals
+anova(fit) # anova table 
+vcov(fit) # covariance matrix for model parameters 
+influence(fit) # regression diagnostics
+```
+
+Gráficos de Diagnóstico provém avaliação de heterocedásticidade, normalidade e observações influentes (potenciais outliers). Copie e cole o seguinte código para avaliar graficamente os pressupóstos da Regressão Linear e testar a normalidade dos residuos.
+```{r Code Block 2, message=FALSE, warning=FALSE, eval=FALSE}
+# diagnostic plots 
+layout(matrix(c(1,2,3,4),2,2)) # optional 4 graphs/page 
+plot(fit)
+
+# executando o teste de normalidade
+require(nortest)
+lillie.test(residuals(fit))
+```
+
+## Diagnósticos da Regressão
+É possível que deseje-se maior rigos na avaliação dos pressupostos da regressão. Uma excelente revisão dos diagnósticos de regressão é fornecida por John Fox, apropriadamente chamado de [Overview of Regression Diagnostics](http://socserv.socsci.mcmaster.ca/jfox/Courses/Brazil-2009/index.html). O pacote **car** do Dr. Fox fornece utilitários avançados para modelagem de regressão.
+
+Vamos assumir que estamos ajustando um modelo linear múltiplo nos dados da base **mtcars**.
+```{r Code Block 3, message=FALSE, warning=FALSE}
+fit <- lm(mpg~disp+hp+wt+drat, data=mtcars)
+```
+
+Identificando os Outliers...
+```{r Code Block 4, message=FALSE, warning=FALSE, out.width = '65%', fig.align = "center"}
+outlierTest(fit) # Bonferonni p-value for most extreme obs
+qqPlot(fit, main="QQ Plot") #qq plot for studentized resid 
+```
+```{r Code Block 4a, message=FALSE, warning=FALSE,, out.width = '80%', fig.align = "center"}
+leveragePlots(fit) # leverage plots
+```
+
+Avaliando a influência das variáveis...
+```{r Code Block 5, message=FALSE, warning=FALSE,, out.width = '80%', fig.align = "center"}
+# added variable plots 
+avPlots(fit)
+```
+```{r Code Block 5a, message=FALSE, warning=FALSE, out.width = '65%', fig.align = "center"}
+# Cook's D plot
+# identify D values > 4/(n-k-1) 
+cutoff <- 4/((nrow(mtcars)-length(fit$coefficients)-2)) 
+plot(fit, which=4, cook.levels=cutoff)
+# Influence Plot 
+influencePlot(fit, id.method="identify", main="Influence Plot", sub="Circle size is proportial to Cook's Distance" )
+```
+
+Avaliando a normalidade dos resíduos...
+```{r Code Block 6, message=FALSE, warning=FALSE, out.width = '65%', fig.align = "center"}
+# qq plot for studentized resid
+qqPlot(fit, main="QQ Plot")
+# distribution of studentized residuals
+require(MASS)
+sresid <- studres(fit) 
+hist(sresid, freq=FALSE, 
+   main="Distribution of Studentized Residuals")
+xfit<-seq(min(sresid),max(sresid),length=40) 
+yfit<-dnorm(xfit) 
+lines(xfit, yfit)
+```
+
+Avaliando a heterocedasticidade...
+```{r Code Block 7, message=FALSE, warning=FALSE, out.width = '65%', fig.align = "center"}
+# non-constant error variance test
+ncvTest(fit)
+# plot studentized residuals vs. fitted values 
+spreadLevelPlot(fit)
+```
+
+Avaliando a presença de multicolinearidade...
+```{r Code Block 8, message=FALSE, warning=FALSE}
+vif(fit) # variance inflation factors 
+sqrt(vif(fit)) > 2 # problem?
+```
+
+Avaliando a independência dos residuos - Erros não autocorrelacionados...
+```{r Code Block 9, message=FALSE, warning=FALSE}
+durbinWatsonTest(fit)
+```
+
+
+### Comparando modelos
+Você pode comprar modelos com a função **anova()**. O seguinte código verifica o impacto de **wt** e **vs** na predição de **mpg** em relação a um modelo que utiliza apenas **hp** como variável preditora. 
+
+```{r Code Block 10, message=FALSE, warning=FALSE}
+# compare models
+fit2 <- lm(mpg ~ hp, data=mtcars)
+anova(fit2,fit)
+```
+
+### Seleção de Variáveis
+A seleção de um subconjunto de variáveis preditoras de um conjunto maior (por exemplo, seleção por etapas) é um tópico controverso. Você pode executar a seleção passo a passo (avançar, retroceder, ambos) usando a função **stepAIC()** do pacote **MASS**. O **stepAIC()** realiza a seleção do modelo passo a passo pelo AIC exato.
+
+```{r Code Block 11, message=FALSE, warning=FALSE}
+# Stepwise Regression
+require(MASS)
+fit <- lm(mpg ~ disp + hp + drat + wt + qsec + vs, data=mtcars)
+step <- stepAIC(fit, direction="both")
+step$anova # display results
+```
+
+Como alternativa, você pode executar a regressão de todos os subconjuntos usando a função **leaps()** do pacote **leaps**. No código a seguir, o **nbest** indica o número de subconjuntos de cada tamanho a serem relatados. Aqui, os dez melhores modelos serão relatados para cada tamanho de subconjunto (1 preditor, 2 preditores etc.). Copie e cole o código no Console do R para verificar os resultados.
+```{r Code Block 12, message=FALSE, warning=FALSE, eval=FALSE}
+# All Subsets Regression
+require(leaps)
+leaps<-regsubsets(mpg ~ disp + hp + drat + wt + qsec + vs, data=mtcars,nbest=10)
+# view results 
+summary(leaps)
+# plot a table of models showing variables in each model.
+# models are ordered by the selection statistic.
+plot(leaps,scale="r2")
+# plot statistic by subset size 
+require(car)
+subsets(leaps, statistic="rsq")
+```
+## Indo além...
+O pacote **relaimpo** fornece medidas de importância relativa para cada um dos preditores no modelo. Consulte **help(calc.relimp)** para obter detalhes sobre as quatro medidas de importância relativa fornecidas.
+
+## Modelos Lineares Generalizados
+Modelos lineares generalizados são ajustados com a função **glm()**. A forma da função é **glm(formula, family=familytype(link=linkfunction), data=)**. De acordo com as características da variável de resposta, a função link é definida. A mais comum é quando a resosta é binária. Neste caso temos um modelo de regressão logistica e o link será **"logit"**. Consulte a **help(glm)** para outras opções de modelagem. Consulte **help(family)** para outras funções de vínculo permitidas para cada família.
+
+### Regressão Logística
+A regressão logística é útil quando você está prevendo um resultado binário de um conjunto de variáveis preditivas contínuas. É frequentemente preferido em relação à análise da função discriminante devido às suas suposições menos restritivas.
+
+```{r Code Block 13, message=FALSE, warning=FALSE}
+fitlog <- glm(am ~ mpg + hp + qsec, data=mtcars, family=binomial())
+summary(fitlog) # display results
+confint(fitlog) # 95% CI for the coefficients
+exp(coef(fitlog)) # exponentiated coefficients
+exp(confint(fitlog)) # 95% CI for exponentiated coefficients
+predict(fitlog, type="response") # predicted values
+residuals(fitlog, type="deviance") # residuals
+#confusion matrix
+table(mtcars$am, predict(fitlog, type="response") > 0.5)
+```
+
+## Atividade
+
+1. A partir da base de dados **Seguro_Residencial.xlsx** utilizada na Aula 02, construa um modelo de regressão para predizer se um determinado lançamento é fraudulento. Considere o código a seguir para separar a base de dados em uma base de treinamento e outra de teste. Apresente a evolução dos resultados até o seu melhor modelo e justifique por que este modelo foi o escolhido.
+```{r Code Block 14, message=FALSE, warning=FALSE, eval=FALSE}
+require(caret)
+indice.treino <- createDataPartition(y=1:dim(mydata)[1], p=0.75, list=FALSE)
+treino = mydata[indice.treino, ]
+teste = mydata[-indice.treino, ]
+```

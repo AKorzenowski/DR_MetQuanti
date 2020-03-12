@@ -4,7 +4,7 @@ author: "Prof. Dr. A. L. Korzenowski"
 header-includes:
    - \usepackage{array,xcolor,colortbl}
 output: pdf_document
-lang: pt
+#lang: pt
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, cache = 2)
@@ -25,24 +25,24 @@ Nesta disciplina trabalharemos com certa flexibilidade em apenas alguns tópicos
   \rowcolor{gray!10} & & Análise de dados - Técnicas Tradicionais\\
   \hline
    1 & 06/03 & Apresentação da disciplina, R-Package com RStudio \\
-   2 & 13/03 & Conceitos de Testes de hipóteses e aplicações \\
-   3 & 20/03 & Modelos Lineares de Regressão e Generalizados \\
-   4 & 27/03 & Análise de Cluster - K-means \\
-   5 & 03/04 & Análise Fatorial Exploratória - Testes diagnósticos e interpretações\\
+   2 & 20/03 & Conceitos de Testes de hipóteses e aplicações \\
+   3 & 27/03 & Modelos Lineares de Regressão e Generalizados \\
+   4 & 03/04 & Análise de Cluster - K-means \\
+   5 & 17/04 & Análise Fatorial Exploratória - Testes diagnósticos e interpretações\\
   \hline
   \rowcolor{gray!10} & & Big Data \& Analytics\\
   \hline
-   6 & 17/04 & Introdução à Data Mining - Association Rules \\
-   7 & 24/04 & Modelo de aprendizagem supervisionada: Artificial Neural Networks \\
-   8 & 08/05 & Modelo de Classificação: Linear Support Vector Machine \\
-   9 & 15/05 & Otimização Combinatória: Simulated Annealing \\
-  10 & 22/05 & Otimização Combinatória: Genetic Algorithm \\ 
+   6 & 24/04 & Introdução à Data Mining - Association Rules \\
+   7 & 08/05 & Modelo de aprendizagem supervisionada: Artificial Neural Networks \\
+   8 & 15/05 & Modelo de Classificação: Linear Support Vector Machine \\
+   9 & 22/05 & Otimização Combinatória: Genetic Algorithm \\
+  10 & 29/05 & Aplicações de IA com Genetic Algorithm \\ 
   \hline
   \rowcolor{gray!10} & & Projeto Aplicado\\
   \hline
-  11 & 29/05 & Definição do problema - Planejamento da solução \\
-  12 & 05/06 & Implementação da Solução \\
-  13 & 19/06 & Implementação da Solução \\
+  11 & 05/06 & Definição do problema - Planejamento da solução \\
+  12 & 19/06 & Implementação da Solução \\
+  13 &  --  & Implementação da Solução \\
   14 & 26/06 & Validação dos Resultados\\
   15 & 03/07 & Apresentação dos resultados - Entrega do relatório\\
   \hline
