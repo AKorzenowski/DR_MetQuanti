@@ -1,0 +1,307 @@
+---
+title: "Métodos Quantitativos"
+author: "Prof. Dr. A. L. Korzenowski"
+header-includes: \usepackage{array,xcolor,colortbl,amsmath}
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+always_allow_html: yes
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = 0)
+options(tinytex.verbose = TRUE)
+```
+# Aula 07: Redes Neurais Artificiais
+
+## Redes neurais
+
+Em muitas situações, a relação funcional entre as covariáveis (também conhecidas como variáveis de entrada ou variáveis independentes) e as variáveis de resposta (também conhecidas como variáveis de saída ou variáveis dependentes) é de grande interesse.
+
+As redes neurais artificiais podem ser aplicadas como aproximação a qualquer relação funcional complexa. Ao contrário dos modelos lineares generalizados, não é necessário que o tipo de relação entre variáveis dependentes e variáveis resposta seja, por exemplo, uma combinação linear. Isso faz das redes neurais artificiais uma valiosa ferramenta quantitativa. Esses modelos são, particularmente, extensões diretas dos modelos lineares generalizados e podem ser aplicados de maneira semelhante.
+
+Dados observados são usados para treinar a rede neural, fazendo assim com que a rede neural "aprenda" uma aproximação da relação entre as variáveis independentes e dependentes de forma iterativa por meio da adaptação contínua dos seus parâmetros. De fato, usando a nomenclatura estatística, os parâmetros do modelo são estimados por meio da amostra.
+
+## Perceptron Multi-Camadas
+
+O pacote neuralnet se concentra nos modelos Perceptron Multi-Camadas (Multi-Layer Perceptrons - MLP), os quais são úteis na modelagem por meio de relações funcionais entre as variáveis.  A estrutura subjacente de um MLP é um grafo orientado, isto é, consiste de vértices (neurônios) e arestas (sinapses). Os neurônios são organizados em camadas, que são normalmente ligadas por sinapses. No pacote neuralnet, uma sinapse só pode se conectar a camadas posteriores.
+
+A camada de entrada é constituída por todas as covariáveis (um neurônio para cada covariável) separadas por neurônios (camadas ocultas) até as variáveis resposta. Essas camadas intermédias são denominadas camadas ocultas (ou variáveis latentes), por não serem diretamente observáveis. As camadas de entrada e as camadas ocultas incluem um neurônio constante, o qual estará associado ao intercepto em modelos lineares, ou seja, não é diretamente influenciado por qualquer covariável.
+
+Um peso (parâmetro) está associado a cada uma das sinapses, representando o efeito correspondente do neurônio e de todos os dados passam pela rede neural como sinais. Os sinais são processados inicialmente pela função de integração combinando todos os sinais de entrada e, em seguida, pela função de ativação transformando os resultados do neurônio.
+
+O modelo perceptron multicamada mais simples consiste de uma única camada de entrada com $n$ covariáveis e uma camada de saída com um único neurônio de saída. Esse modelo calcula a seguinte função:
+
+$$
+o(\mathbf{x})=f \left( w_0 + \sum_{i=1}^n w_i x_i \right) = f(w_0 + \mathbf{w}^T\mathbf{x}),
+$$
+
+onde $w_{0}$ denota o intercepto, $\mathbf{w} = (w_{1},\dots, w_{n})$ o vetor de todos os demais pesos (parâmetros), e $\mathbf{x} = (x_{1},\dots, x_{n})$ o vetor de todas as covariáveis.
+
+A função é matematicamente equivalente à estrutura padrão do modelo linear generalizado com função de ligação $f^{-1}(.)$. Portanto, todos os pesos calculados são, neste caso, equivalentes aos parâmetros da regressão via MLG. Para aumentar a flexibilidade da modelagem mais camadas ocultas podem ser incluídas, aumentando assim a "não-linearidade" do modelo. No entanto, Hornik et al. (1989) mostraram que uma única camada oculta é suficiente para modelar qualquer função contínua por partes.
+
+O modelo perceptron multicamada com uma camada oculta consistindo de $J$ neurônios calcula a seguinte função:
+
+\begin{equation*}
+0(\mathbf{x})  =  f\left( w_0 + \sum_{j=1}^J w_j f \left( w_{0j} + \sum_{i=0}^n w_{ij} x_i \right) \right) = f\left( w_0 + \sum_{j=1}^J w_j f(w_{0j} + \mathbf{w_j}^T\mathbf{x}) \right)
+\end{equation*}
+
+onde $w_{0}$ denota o intercepto do neurônio de saída e $w_{0j}$ representa o intercepto do $j$-ésimo neurônio oculto. Além disso, $w_{j}$ denota o peso sináptico correspondente à sinapse começando no $j$-ésimo neurônio oculto e que conduz ao neurônio de saída. $\mathbf{w_{j}} = (w_{1j},\dots, w_{nj})$ o vetor de todos os pesos sinápticos correspondentes às sinapses que conduzem ao $j$-ésimo neurônio oculto, e $\mathbf{x} = (x_{1},\dots, x_{n})$ é o vetor de todas as covariáveis. 
+
+Apesar das redes neurais serem extensões diretas dos MLG, os parâmetros não podem ser interpretados da mesma maneira.
+
+De maneira formal, todos os neurônios ocultos e os neurônios de saída calculam a seguinte função: $f(g(z_{0},z_{1},\dots, z_{k})) = f(g(\mathbf{z}))$ a partir das saídas de todos os neurônios precedentes $z_{0}, z_{1},\dots, z_{k}$, onde $g:\mathbb{R}^{k+1}\rightarrow \mathbb{R}$ representa a função de integração e $f:\mathbb{R}\rightarrow \mathbb{R}$ é a função de ativação. O neurônio unitário $z_{0}$ é uma constante o qual está relacionado com o conceito de intercepto em modelos de regressão.
+
+A função de integração é, muitas vezes, definida como $g(\mathbf{z})= w_{0}z_{0} + \sum_{i=1}^{n}w_{i}z_{i}= w0 + \mathbf{w}^{'}\mathbf{z}$. A função de ativação $f$ é geralmente uma função não-linear, não-decrescente, limitada e também diferenciável tal como o função logística $f(u) = 1/(1+\exp^{-u})$ ou a tangente hiperbólica.
+
+Essa função deve ser escolhida em relação à variável de resposta, assim como nos modelos lineares generalizados. A função logística é, por exemplo, apropriada para variáveis resposta binárias, uma vez que mapeia a saída de cada neurônio para o intervalo $[0,1]$. O pacote neuralnet usa a mesma função de integração, bem como função de ativação para todos os neurônios.
+
+## Aprendizado supervisionado
+
+As redes neurais são estimadas por meio de um processo de treinamento da rede que usa os dados para "aprender". Especificamente, o pacote neuralnet concentra-se em algoritmos de aprendizado supervisionado. Estes algoritmos de aprendizagem são caracterizados pela utilização de saídas (outputs, resultados ou ainda variáveis dependentes), as quais são comparadas com o valor predito pela rede neural, adaptando dinamicamente os valores dos parâmetros de modo que o "erro" seja minimizado. 
+
+Os parâmetros de uma rede neural são os seus pesos. Todos os pesos são geralmente iniciados com valores aleatórios provenientes de uma distribuição normal padrão. Durante um processo iterativo de formação da rede, as seguintes etapas são repetidas:
+
+* A rede neural calcula uma saída de $o(\mathbf{x})$ para as entradas dadas $\mathbf{x}$ e para os parâmetros correntes (pesos atuais). Se o processo de formação ainda não estiver concluído, os resultados previstos serão diferentes da saída $\mathbf{y}$ observada.
+
+* Uma função de erro, como a Soma dos Quadrados dos Erros (SSE - Sum of Squared Errors):
+
+$$E=\frac{1}{2}\sum_{l=1}^L \sum_{h=1}^H (o_{lh} - y_{lh})^2 .$$
+
+* Todos os pesos são adaptados segundo alguma regra de aprendizagem definida a priori.
+
+O processo termina se um critério pré-determinado é atingido, por exemplo, se todas as derivadas parciais da função de erro com respeito aos pesos $(\partial E/\partial \mathbf{w})$ são menores do que um dado limiar. Um algoritmo de aprendizagem amplamente utilizado é o algoritmo resilient backpropagation.
+
+**Nota**: source_url('https://gist.githubusercontent.com/fawda123/7471137/raw/
+
+466c1474d0a505ff044412703516c34f1a4684a5/nnet_plot_update.r')
+
+## Uma aplicação de Regressão
+
+Vamos revisitar o problema de previsão das milhas por galão, modelo que ajustamos na nossa aula de Modelos Lineares Generalizados. O consumo do veículo em $mpg$ será predita pelas variáveis $hp + wt + vs$. Em seguida vamos dividir a base de dados em duas partes (treinamento e validação). Estimaremos um modelo de redes neurais com 1 camada com 4 neurônios e admitindo o número máximo de 1000 iterações com *threshold* igual a 0,1. Uma vez obtidos os valores para os parâmetros do modelo de redes neurais podemos analisar os resultados. O próximo passo é realizar a previsão para os dados de validação. Vamos ao sacrifício...
+
+```{r Code Block 1, message=FALSE, warning=FALSE, eval=TRUE, out.width = '65%', fig.align = "center"}
+#Limpa o Workspace
+rm(list=ls())
+ 
+#Habilita o pacote car
+if (!require(car)) install.packages('car')
+require(car)
+attach(mtcars)
+
+dados<-mtcars
+dados <- na.omit(dados)
+
+indice <- sample(1:nrow(dados), trunc(nrow(dados)*0.7), 
+                 replace=FALSE)
+
+#Dados para estimação
+dados.Treina<-dados[indice,c(1,4,6,8)]
+ 
+#Dados para validação
+dados.Valida<-dados[-indice,c(1,4,6,8)]
+
+# Habilita o pacote nnet
+if (!require(nnet)) install.packages("nnet")  
+library(nnet)  
+
+nn <- nnet(mpg ~ hp + wt + vs, data=dados.Treina, size=4, linout=T,  
+       rang = 0.1, decay = 5e-2, maxit = 1000)
+
+#Apresenta os valores para os pesos
+nn$wts
+
+#Faz o gráfico do modelo
+#import the function from Github
+if (!require(devtools)) install.packages("devtools")  
+library(devtools)
+source_url('https://gist.githubusercontent.com/fawda123/7471137/raw/466c1474d0a505ff044412703516c34f1a4684a5/nnet_plot_update.r')
+ 
+#plot  model
+plot(nn, nid=F)
+
+#Faz a previsão
+previsao.nn<-predict(nn,dados.Valida[,2:4])
+
+
+#Monta a base com as previsões
+previsao.todos<-as.data.frame(cbind(dados.Valida[,1], previsao.nn))
+colnames(previsao.todos)<-c("Obsevado","Predito.NN")
+
+#Faz o gráfico
+if (!require(ggplot2)) install.packages('ggplot2')
+library("ggplot2")
+ggplot(previsao.todos, aes(1:nrow(dados.Valida)), ) + 
+  geom_line(aes(y = Obsevado, colour = "Obsevado")) + 
+  geom_line(aes(y = Predito.NN, colour = "Predito NN")) +
+  ggtitle("mpg")
+
+#Encontra os erros
+erro.nn<-previsao.todos[,1]-previsao.todos[,2]
+RMSE <- sqrt(sum(erro.nn^2))
+RMSE
+```
+
+## Uma aplicação em séries temporais
+
+Vamos baixar dados de uma ação na bolsa, ajustar um modelo Autoregressivo de ordem 5, isto é, 
+
+$$y_{t}=\phi_{0}+\phi_{1}y_{t-1}+\phi_{2}y_{t-2}+\phi_{3}y_{t-3}+\phi_{4}y_{t-4}+\phi_{5}y_{t-5}.$$
+
+Nesse caso, o valor da ação no tempo $t$ seria predita pelos $5$ valores (diários) que a antecedem. Em seguida vamos dividir a série temporal em duas partes (treinamento e teste). Estimaremos um modelo de redes neurais com 2 camadas com 7 e 3 neurônios e admitindo o número máximo de 100000 iterações com *threshold* igual a 1. Uma vez obtidos os valores para os parâmetros do modelo de redes neurais podemos analisar os resultados. O próximo passo é realizar a previsão para os dados de validação.
+
+```{r Code Block 2, message=FALSE, warning=FALSE, eval=TRUE, out.width = '65%', fig.align = "center"}
+
+#Limpa o Workspace
+rm(list=ls())
+ 
+#Habilita o pacote quantmod
+if (!require(quantmod)) install.packages('quantmod')
+library(quantmod)
+ 
+#Início do período de interesse
+inicio = as.Date("2015-01-01") 
+ 
+#Fim do período de interesse
+fim = as.Date("2020-02-28") 
+ 
+#Obtêm os dados da ITUB4
+getSymbols("ITUB4.SA", src="yahoo",from=inicio,to=fim)
+
+#Dados para o neuralnet
+t0<-as.numeric(Cl(ITUB4.SA))            #Cinco dias antes
+t0<-t0[-((length(t0)-4):length(t0))]
+ 
+t1<-as.numeric(Cl(ITUB4.SA)) [-1]       #Quatro dias antes
+t1<-t1[-((length(t1)-3):length(t1))]
+ 
+t2<-as.numeric(Cl(ITUB4.SA)) [-c(1,2)]  #Três dias antes
+t2<-t2[-((length(t2)-2):length(t2))]
+ 
+t3<-as.numeric(Cl(ITUB4.SA)) [-(1:3)]   #Dois dias antes
+t3<-t3[-((length(t3)-1):length(t3))]
+ 
+t4<-as.numeric(Cl(ITUB4.SA)) [-(1:4)]   #Um dia antes
+t4<-t4[-length(t0)]
+ 
+t5<-as.numeric(Cl(ITUB4.SA)) [-(1:5)]   #Variável dependente
+
+#Cria a base
+dados<-cbind(t1,t2,t3,t4,t5)
+dados<-na.omit(dados) 
+ 
+#Dados para estimação
+dados.Treina<-dados[1:trunc(nrow(dados)*.7),]
+ 
+#Dados para validação
+dados.Valida<-dados[(trunc(nrow(dados)*.7)+1):nrow(dados),]
+
+# Habilita o pacote nnet
+if (!require(nnet)) install.packages("nnet")  
+library(nnet)  
+
+nn <- nnet(t5 ~ t4 + t3 + t2 + t1, data=dados.Treina, size=7, linout=T,  
+       rang = 0.1, decay = 5e-2, maxit = 1000)
+
+#Apresenta os valores para os pesos
+nn$wts
+
+#Faz o gráfico do modelo
+#import the function from Github
+if (!require(devtools)) install.packages("devtools")  
+library(devtools)
+source_url('https://gist.githubusercontent.com/fawda123/7471137/raw/466c1474d0a505ff044412703516c34f1a4684a5/nnet_plot_update.r')
+ 
+#plot  model
+plot(nn, nid=F)
+
+#Faz a previsão
+previsao.nn<-predict(nn,dados.Valida[,1:4])
+
+#Monta a base com as previsões
+Tempo<-seq((trunc(nrow(dados)*.7)+1),nrow(dados))
+previsao.todos<-as.data.frame(cbind(Tempo, dados.Valida[,5], previsao.nn))
+colnames(previsao.todos)<-c("Tempo","Obsevado","Predito.NN")
+ 
+#Faz o gráfico
+if (!require(ggplot2)) install.packages('ggplot2')
+library("ggplot2")
+ggplot(previsao.todos, aes(Tempo)) + 
+  geom_line(aes(y = Obsevado, colour = "Obsevado")) + 
+  geom_line(aes(y = Predito.NN, colour = "Predito NN")) +
+  ggtitle("ITUB4.SA")
+
+#Encontra os erros
+erro.nn<-previsao.todos[,2]-previsao.todos[,3]
+RMSE <- sqrt(sum(erro.nn^2))
+RMSE
+```
+
+## Uma aplicação de classificação binária
+
+Aqui vamos revisitar o exemplo do Seguro Residencial e tentar estimar a suspeita de fraude utilizando Rede Neural Artificial.
+
+Para tanto vamos dividir a Base em Seguro.Treino e Seguro.Valida, vamos configurar a rede neural e treiná-la e após utilizar uma matriz de confusão para validar os resultados da classificação efetuada.
+
+```{r Code Block 3, message=FALSE, warning=FALSE, out.width = '65%', fig.align = "center"}
+
+#Limpa o Workspace
+rm(list=ls())
+
+# Habilita o pacote readxl
+if (!require(readxl)) install.packages('readxl')
+library(readxl)
+
+# Carrega a base de dados
+Seguro_Residencial<-read_excel("Seguro_Residencial.xlsx")
+
+for(i in 1:5){
+  Seguro_Residencial<-cbind(Seguro_Residencial, Seguro_Residencial$Tipo==i)
+}
+names(Seguro_Residencial)[20:24]<-c("Vendaval","Enchente","Incendio",
+                                    "Contaminacao","Vandalismo")
+Seguro_Residencial <- Seguro_Residencial[,c(6,4,8,9,11,16,17,20:24)]
+
+indice <- sample(1:nrow(Seguro_Residencial), trunc(nrow(Seguro_Residencial)*0.7),
+                 replace=FALSE)
+
+#Dados para estimação
+dados.Treina<-Seguro_Residencial[indice,]
+ 
+#Dados para validação
+dados.Valida<-Seguro_Residencial[-indice,]
+
+# Habilita o pacote nnet
+if (!require(nnet)) install.packages("nnet")  
+library(nnet)  
+
+nn <- nnet(dados.Treina[,2:ncol(dados.Treina)], dados.Treina[,1], 
+           size=9, linout=T, rang = 0.1, decay = 5e-2, maxit = 100000)
+
+# Habilita o pacote RSNNS
+#if (!require(RSNNS)) install.packages("RSNNS")  
+#library(RSNNS)
+#nn <- mlp(dados.Treina[,2:ncol(dados.Treina)], dados.Treina[,1], 
+#           size=15, linout=T, maxit = 1000)
+
+
+#Faz o gráfico do modelo
+#import the function from Github
+if (!require(devtools)) install.packages("devtools")  
+library(devtools)
+source_url('https://gist.githubusercontent.com/fawda123/7471137/raw/466c1474d0a505ff044412703516c34f1a4684a5/nnet_plot_update.r')
+ 
+#plot  model
+plot.nnet(nn, nid=F)
+
+#Faz a previsão
+previsao.nn<-predict(nn,dados.Valida[,2:ncol(dados.Valida)])
+
+#Converte previsão em resposta binária
+pred <- ifelse(previsao.nn > 0.5, 1, 0)
+
+#Constrói a matriz da confusão
+table(dados.Valida$Fraudulento, pred)
+
+
+```
